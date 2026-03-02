@@ -1,0 +1,18 @@
+# File Purpose:
+# - What this file is: local Docker Compose setup for project infrastructure.
+# - Why it is relevant: it starts LocalStack with S3 so the pipeline can write
+#   and read Parquet objects from an S3-compatible endpoint.
+# - Role in architecture: infra layer for local development/testing.
+
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports: 
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes: 
+      - "/var/run/docker.sock:/var/run/docker.sock"
